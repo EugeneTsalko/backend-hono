@@ -3,8 +3,8 @@
 ### STACK:
 
 - Framework - hono
-- Orm - Drizzle ORM
-- Database - postgresql
+- Orm - Prisma ORM
+- Database - SQLite3
 - TS
 - Prettier/Eslint
 - Postman
