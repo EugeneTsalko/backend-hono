@@ -7,7 +7,6 @@
 - Database - SQLite3
 - TS
 - Prettier/Eslint
-- Postman
 
 # STEP 1:
 
