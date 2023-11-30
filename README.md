@@ -6,6 +6,7 @@
 - Orm - Prisma ORM
 - Database - SQLite3
 - TS
+- Zod
 - Prettier/Eslint
 
 # STEP 1:
