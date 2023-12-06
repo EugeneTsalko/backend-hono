@@ -1,4 +1,8 @@
-import { serve } from '@hono/node-server'
-import { userRoute } from './routes'
+import { serve } from '@hono/node-server';
+import { Hono } from 'hono';
+import { routes } from './routes';
 
-serve(userRoute)
+const app = new Hono();
+app.route('/', routes);
+
+serve(app);

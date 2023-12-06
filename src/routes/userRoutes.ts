@@ -12,31 +12,27 @@ import bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
 
-export const userRoute = new Hono();
+export const userRoutes = new Hono().basePath('/users');
 
-userRoute.get('/', async (c) => {
-  return c.text('Hello!');
-});
-
-userRoute.get('/users', async (c) => {
+userRoutes.get('/', async (c) => {
   const allUsers = await prisma.user.findMany();
   return c.json({ data: allUsers, ok: true });
 });
 
-userRoute.get(
-  '/users/:id',
-  validator('param', (value, c) => {
+userRoutes.get(
+  '/:id',
+  validator('param', (value: { id: string }, c) => {
     const parsedId = schemaId.safeParse(value.id);
 
     if (!parsedId.success) {
       return c.json({ error: 'Invalid ID. Not Found.', ok: false }, 404);
     }
-    return { id: value.id };
+    return { id: parsedId.data };
   }),
   async (c) => {
     const { id } = c.req.valid('param');
     const user = await prisma.user.findUnique({
-      where: { id: Number(id) },
+      where: { id },
     });
 
     if (!user) {
@@ -50,8 +46,8 @@ userRoute.get(
   }
 );
 
-userRoute.post(
-  '/users',
+userRoutes.post(
+  '/',
   validator('form', (value, c) => {
     const parsedUser = schemaUser.safeParse(value);
     if (!parsedUser.success) {
@@ -92,8 +88,8 @@ userRoute.post(
   }
 );
 
-userRoute.patch(
-  '/users/:id',
+userRoutes.patch(
+  '/:id',
   validator('param', (value, c) => {
     const parsedId = schemaId.safeParse(value.id);
 
@@ -107,8 +103,8 @@ userRoute.patch(
     const parsedLogin = schemaLogin.safeParse(value.login);
     const parsedEmail = schemaEmail.safeParse(value.email);
     const parsedPassword = schemaPassword.safeParse(value.password);
-    console.log(login);
-    console.log(parsedLogin);
+    // console.log(login);
+    // console.log(parsedLogin);
 
     if (login && !parsedLogin.success) {
       return c.json(
