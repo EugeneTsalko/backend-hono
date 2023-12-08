@@ -1,17 +1,17 @@
 import { PrismaClient, type User } from '@prisma/client';
 import { DbError } from '../errors/errors';
-import { type IUser } from '../models/userModel';
+import { type UserBodyType } from '../models/userModel';
 
 const prisma = new PrismaClient();
 
 export const userRepository = {
-  async getAll(): Promise<User[]> {
+  async getAll() {
     const dbResult = await prisma.user.findMany();
 
     return dbResult;
   },
 
-  async getById(id: number): Promise<User | null> {
+  async getById(id: number) {
     const user = await prisma.user.findUnique({
       where: { id },
     });
@@ -37,7 +37,7 @@ export const userRepository = {
     return users;
   },
 
-  async postUser(user: IUser) {
+  async postUser(user: UserBodyType) {
     const { login, email, password } = user;
 
     const newUser = await prisma.user.create({
@@ -56,5 +56,18 @@ export const userRepository = {
     });
 
     return updatedUser;
+  },
+
+  async deleteUser(id: number) {
+    await this.getById(id);
+    const user = await prisma.user.delete({
+      where: { id },
+    });
+
+    if (!user) {
+      throw new DbError(`User with ID: ${id} was not found`, 404);
+    }
+
+    return user;
   },
 };

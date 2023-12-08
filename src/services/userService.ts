@@ -1,14 +1,14 @@
 import bcrypt from 'bcrypt';
 import { userRepository } from '../dataAcces/userRepository';
-import { type IUser } from '../models/userModel';
 import { type User } from '@prisma/client';
+import { type UserBodyType } from '../models/userModel';
 
 export const userService = {
   hashPassword(plainPassword: string) {
     return bcrypt.hashSync(plainPassword, 8);
   },
 
-  async createUser(user: IUser): Promise<IUser> {
+  async createUser(user: UserBodyType) {
     const { login, email, password } = user;
     await userRepository.getByLoginOrEmail(login, email);
 

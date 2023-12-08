@@ -10,9 +10,6 @@ userRoutes.get('/:id', validateUserId, userController.findUserById);
 
 userRoutes.post('/', validateUser, userController.createUser);
 
-userRoutes.patch(
-  '/:id',
-  validateUserId,
-  validateUser,
-  userController.updateUser
-);
+userRoutes.patch('/', validateUser, userController.updateUser);
+
+userRoutes.delete('/:id', validateUserId, userController.deleteUser);

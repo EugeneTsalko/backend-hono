@@ -5,8 +5,8 @@ import {
   schemaLogin,
   schemaPassword,
 } from '../models/userSchema';
-import { type IUser } from '../models/userModel';
 import { ValidationError } from '../errors/errors';
+import { type User } from '@prisma/client';
 
 export const validateUserId = validator('param', (value: { id: string }) => {
   const parsedId = schemaId.safeParse(value.id);
@@ -18,7 +18,7 @@ export const validateUserId = validator('param', (value: { id: string }) => {
 });
 
 export const validateUser = validator('json', (value) => {
-  const { login, email, password }: IUser = value;
+  const { id, login, email, password }: User = value;
   const parsedLogin = schemaLogin.safeParse(value.login);
   const parsedEmail = schemaEmail.safeParse(value.email);
   const parsedPassword = schemaPassword.safeParse(value.password);
@@ -37,5 +37,5 @@ export const validateUser = validator('json', (value) => {
     );
   }
 
-  return { login, email, password };
+  return { id, login, email, password };
 });
