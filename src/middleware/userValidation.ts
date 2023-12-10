@@ -1,21 +1,7 @@
 import { validator } from 'hono/validator';
-import {
-  schemaEmail,
-  schemaId,
-  schemaLogin,
-  schemaPassword,
-} from '../models/userSchema';
+import { schemaEmail, schemaLogin, schemaPassword } from '../models/userSchema';
 import { ValidationError } from '../errors/errors';
 import { type User } from '@prisma/client';
-
-export const validateUserId = validator('param', (value: { id: string }) => {
-  const parsedId = schemaId.safeParse(value.id);
-
-  if (!parsedId.success) {
-    throw new ValidationError('ID must be a number');
-  }
-  return { id: parsedId.data };
-});
 
 export const validateUser = validator('json', (value) => {
   const { id, login, email, password }: User = value;

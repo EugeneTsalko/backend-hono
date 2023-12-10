@@ -1,7 +1,5 @@
 import { z } from 'zod';
 
-export const schemaId = z.coerce.number().min(0);
-
 export const schemaLogin = z.string().min(1);
 
 export const schemaEmail = z.string().email();

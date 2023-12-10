@@ -64,10 +64,6 @@ export const userRepository = {
       where: { id },
     });
 
-    if (!user) {
-      throw new DbError(`User with ID: ${id} was not found`, 404);
-    }
-
     return user;
   },
 };

@@ -1,7 +1,7 @@
 import { type Env, type Context } from 'hono';
 import { userRepository } from '../dataAcces/userRepository';
 import { userService } from '../services/userService';
-import { type UserIdContext, type UserContext } from '../models/contextModel';
+import { type IdContext, type UserContext } from '../models/contextModel';
 
 export const userController = {
   async findAll(
@@ -12,7 +12,7 @@ export const userController = {
     return c.json({ data: users, ok: true }, 200);
   },
 
-  async findById(c: UserIdContext): Promise<Response> {
+  async findById(c: IdContext): Promise<Response> {
     const { id } = c.req.valid('param');
     const user = await userRepository.getById(id);
 
@@ -38,7 +38,7 @@ export const userController = {
     return c.json({ data: updatedUser, ok: true }, 200);
   },
 
-  async delete(c: UserIdContext) {
+  async delete(c: IdContext) {
     const { id } = c.req.valid('param');
     const deletedUser = await userRepository.delete(id);
 
