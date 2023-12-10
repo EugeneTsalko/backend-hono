@@ -8,7 +8,7 @@ export const userService = {
     return bcrypt.hashSync(plainPassword, 8);
   },
 
-  async createUser(user: UserBodyType) {
+  async create(user: UserBodyType) {
     const { login, email, password } = user;
     await userRepository.getByLoginOrEmail(login, email);
 
@@ -22,7 +22,7 @@ export const userService = {
     return newUser;
   },
 
-  async updateUser(user: User): Promise<User> {
+  async update(user: User): Promise<User> {
     const { id, login, email, password } = user;
     await userRepository.getById(id);
     await userRepository.getByLoginOrEmail(login, email);

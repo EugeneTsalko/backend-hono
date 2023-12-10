@@ -21,14 +21,14 @@ export const userController = {
 
   async createUser(c: UserContext) {
     const { login, email, password } = c.req.valid('json');
-    const newUser = await userService.createUser({ login, email, password });
+    const newUser = await userService.create({ login, email, password });
 
     return c.json({ data: newUser, ok: true }, 201);
   },
 
   async updateUser(c: UserContext) {
     const { id, login, email, password } = c.req.valid('json');
-    const updatedUser = await userService.updateUser({
+    const updatedUser = await userService.update({
       id,
       login,
       email,
