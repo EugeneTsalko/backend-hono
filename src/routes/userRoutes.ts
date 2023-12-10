@@ -4,12 +4,12 @@ import { validateUser, validateUserId } from '../middleware/userValidation';
 
 export const userRoutes = new Hono().basePath('/users');
 
-userRoutes.get('/', userController.findAllUsers);
+userRoutes.get('/', userController.findAll);
 
-userRoutes.get('/:id', validateUserId, userController.findUserById);
+userRoutes.get('/:id', validateUserId, userController.findById);
 
-userRoutes.post('/', validateUser, userController.createUser);
+userRoutes.post('/', validateUser, userController.create);
 
-userRoutes.patch('/', validateUser, userController.updateUser);
+userRoutes.patch('/', validateUser, userController.update);
 
-userRoutes.delete('/:id', validateUserId, userController.deleteUser);
+userRoutes.delete('/:id', validateUserId, userController.delete);
