@@ -40,7 +40,7 @@ export const userController = {
 
   async deleteUser(c: UserIdContext) {
     const { id } = c.req.valid('param');
-    const deletedUser = await userRepository.deleteUser(id);
+    const deletedUser = await userRepository.delete(id);
 
     return c.json({ data: deletedUser, ok: true }, 200);
   },

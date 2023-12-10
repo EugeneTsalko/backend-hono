@@ -13,13 +13,13 @@ export const userService = {
     await userRepository.getByLoginOrEmail(login, email);
 
     const hashedPassword = this.hashPassword(password);
-    const postedUser = await userRepository.postUser({
+    const newUser = await userRepository.create({
       login,
       email,
       password: hashedPassword,
     });
 
-    return postedUser;
+    return newUser;
   },
 
   async updateUser(user: User): Promise<User> {
@@ -29,7 +29,7 @@ export const userService = {
 
     const hashedPassword = this.hashPassword(password);
 
-    const updatedUser = await userRepository.patchUser({
+    const updatedUser = await userRepository.update({
       id,
       login,
       email,

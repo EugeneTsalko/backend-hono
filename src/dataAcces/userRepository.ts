@@ -37,7 +37,7 @@ export const userRepository = {
     return users;
   },
 
-  async postUser(user: UserBodyType) {
+  async create(user: UserBodyType) {
     const { login, email, password } = user;
 
     const newUser = await prisma.user.create({
@@ -47,7 +47,7 @@ export const userRepository = {
     return newUser;
   },
 
-  async patchUser(user: User) {
+  async update(user: User) {
     const { id, login, email, password } = user;
 
     const updatedUser = await prisma.user.update({
@@ -58,7 +58,7 @@ export const userRepository = {
     return updatedUser;
   },
 
-  async deleteUser(id: number) {
+  async delete(id: number) {
     await this.getById(id);
     const user = await prisma.user.delete({
       where: { id },
