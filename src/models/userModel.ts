@@ -1,4 +1,3 @@
-import { type z } from 'zod';
-import { type schemaUser } from './userSchema';
+import { type User } from '@prisma/client';
 
-export type UserBodyType = z.infer<typeof schemaUser>;
+export type UserBodyType = Omit<User, 'id'>;

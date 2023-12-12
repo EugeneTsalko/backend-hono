@@ -11,9 +11,3 @@ export const schemaPassword = z
   .regex(/.*[a-z].*/, 'One lowercase character')
   .regex(/.*[A-Z].*/, 'One uppercase character')
   .regex(/.*[0-9].*/, 'One digit');
-
-export const schemaUser = z.object({
-  login: schemaLogin,
-  email: schemaEmail,
-  password: schemaPassword,
-});
