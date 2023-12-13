@@ -9,7 +9,7 @@ export const userService = {
   },
 
   async create(user: UserBodyType) {
-    const { login, email, password } = user;
+    const { login, email, password, role } = user;
     await userRepository.getByLoginOrEmail(login, email);
 
     const hashedPassword = this.hashPassword(password);
@@ -17,13 +17,14 @@ export const userService = {
       login,
       email,
       password: hashedPassword,
+      role,
     });
 
     return newUser;
   },
 
   async update(user: User): Promise<User> {
-    const { id, login, email, password } = user;
+    const { id, login, email, password, role } = user;
     await userRepository.getById(id);
     await userRepository.getByLoginOrEmail(login, email);
 
@@ -34,6 +35,7 @@ export const userService = {
       login,
       email,
       password: hashedPassword,
+      role,
     });
 
     return updatedUser;

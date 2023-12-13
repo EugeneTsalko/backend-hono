@@ -20,19 +20,20 @@ export const userController = {
   },
 
   async create(c: UserContext) {
-    const { login, email, password } = c.req.valid('json');
-    const newUser = await userService.create({ login, email, password });
+    const { login, email, password, role } = c.req.valid('json');
+    const newUser = await userService.create({ login, email, password, role });
 
     return c.json({ data: newUser, ok: true }, 201);
   },
 
   async update(c: UserContext) {
-    const { id, login, email, password } = c.req.valid('json');
+    const { id, login, email, password, role } = c.req.valid('json');
     const updatedUser = await userService.update({
       id,
       login,
       email,
       password,
+      role,
     });
 
     return c.json({ data: updatedUser, ok: true }, 200);
