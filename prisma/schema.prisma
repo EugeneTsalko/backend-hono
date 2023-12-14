@@ -17,6 +17,7 @@ model User {
   password String
   posts Post[]
   role String @default("USER")
+  token Token?
 }
 
 model Post {
@@ -25,4 +26,10 @@ model Post {
   authorId Int
   createdAt DateTime @default(now())
   text String
+}
+
+model Token {
+  user   User @relation(fields: [userId], references: [id])
+  userId Int @unique
+  refreshToken String
 }
