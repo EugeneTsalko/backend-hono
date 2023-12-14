@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import { userRepository } from '../dataAcces/userRepository';
 import { type User } from '@prisma/client';
 import { type UserBodyType } from '../models/userModel';
+import { DbError } from '../errors/errors';
 
 export const userService = {
   hashPassword(plainPassword: string) {
@@ -10,7 +11,15 @@ export const userService = {
 
   async create(user: UserBodyType) {
     const { login, email, password, role } = user;
-    await userRepository.getByLoginOrEmail(login, email);
+
+    const existingUsers = await userRepository.getByLoginOrEmail({
+      email,
+      login,
+    });
+
+    if (existingUsers.length > 0) {
+      throw new DbError(`User with same email or login is already exists`, 409);
+    }
 
     const hashedPassword = this.hashPassword(password);
     const newUser = await userRepository.create({
@@ -26,8 +35,14 @@ export const userService = {
   async update(user: User): Promise<User> {
     const { id, login, email, password, role } = user;
     await userRepository.getById(id);
-    await userRepository.getByLoginOrEmail(login, email);
+    const existingUsers = await userRepository.getByLoginOrEmail({
+      email,
+      login,
+    });
 
+    if (existingUsers.length > 0) {
+      throw new DbError(`User with same email or login is already exists`, 409);
+    }
     const hashedPassword = this.hashPassword(password);
 
     const updatedUser = await userRepository.update({

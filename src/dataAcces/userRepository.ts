@@ -23,16 +23,12 @@ export const userRepository = {
     return user;
   },
 
-  async getByLoginOrEmail(login: string, email: string) {
+  async getByLoginOrEmail({ email, login }: Record<string, string>) {
     const users = await prisma.user.findMany({
       where: {
         OR: [{ login }, { email }],
       },
     });
-
-    if (users.length > 0) {
-      throw new DbError(`User with same login or email is already exists`, 409);
-    }
 
     return users;
   },
