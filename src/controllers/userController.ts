@@ -1,12 +1,10 @@
-import { type Env, type Context } from 'hono';
+import { type Context } from 'hono';
 import { userRepository } from '../dataAcces/userRepository';
 import { userService } from '../services/userService';
 import { type IdContext, type UserContext } from '../models/contextModel';
 
 export const userController = {
-  async findAll(
-    c: Context<Env, '/users', Record<string, unknown>>
-  ): Promise<Response> {
+  async findAll(c: Context) {
     const users = await userRepository.getAll();
 
     return c.json({ data: users, ok: true }, 200);
