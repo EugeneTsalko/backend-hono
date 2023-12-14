@@ -10,3 +10,5 @@ authRoutes.post('/signup', validateUser, authController.signUp);
 authRoutes.post('/signin', validateSignIn, authController.signIn);
 
 authRoutes.post('/logout', authController.logOut);
+
+authRoutes.get('/refresh', authController.refresh);

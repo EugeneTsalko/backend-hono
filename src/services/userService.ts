@@ -3,7 +3,6 @@ import { userRepository } from '../dataAcces/userRepository';
 import { type User } from '@prisma/client';
 import { type UserBodyType } from '../models/userModel';
 import { DbError } from '../errors/errors';
-import { authRepository } from '../dataAcces/authRepository';
 
 export const userService = {
   hashPassword(plainPassword: string) {
@@ -55,11 +54,5 @@ export const userService = {
     });
 
     return updatedUser;
-  },
-
-  async logOut(refreshToken: string) {
-    const token = await authRepository.delete(refreshToken);
-
-    return token;
   },
 };

@@ -41,4 +41,10 @@ export const authRepository = {
 
     return deletedToken;
   },
+
+  async findToken(refreshToken: string) {
+    const token = await prisma.token.findUnique({ where: { refreshToken } });
+
+    return token;
+  },
 };
