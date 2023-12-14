@@ -31,4 +31,14 @@ export const authRepository = {
 
     return updatedToken;
   },
+
+  async delete(refreshToken: string) {
+    const deletedToken = await prisma.token.delete({
+      where: {
+        refreshToken,
+      },
+    });
+
+    return deletedToken;
+  },
 };

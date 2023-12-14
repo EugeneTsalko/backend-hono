@@ -1,6 +1,8 @@
+import { type Context } from 'hono';
 import { type UserContext } from '../models/contextModel';
 import { authService } from '../services/authService';
-import { setCookie } from 'hono/cookie';
+import { deleteCookie, getCookie, setCookie } from 'hono/cookie';
+import { userService } from '../services/userService';
 
 const cookieMaxAge = 15 * 24 * 60 * 60 * 1000; // 15 days in ms
 
@@ -29,5 +31,13 @@ export const authController = {
     });
 
     return c.json({ data: { userData }, ok: true }, 201);
+  },
+
+  async logOut(c: Context) {
+    const { refreshToken } = getCookie(c);
+    await userService.logOut(refreshToken);
+    deleteCookie(c, 'refreshToken');
+
+    return c.json({ ok: true }, 200);
   },
 };
