@@ -11,11 +11,11 @@ export const validateSignIn = validator('json', (value) => {
   const parsedEmail = schemaEmail.safeParse(email);
   const parsedPassword = schemaPassword.safeParse(password);
 
-  if (email && !parsedEmail.success) {
+  if (!parsedEmail.success) {
     throw new ValidationError('Email must be like mail@example.by');
   }
 
-  if (password && !parsedPassword.success) {
+  if (!parsedPassword.success) {
     throw new ValidationError(
       'Password must include lowercase letter, uppercase letter, special character, digit and be minimum 8 characters length.'
     );
@@ -30,15 +30,15 @@ export const validateSignUp = validator('json', (value) => {
   const parsedEmail = schemaEmail.safeParse(email);
   const parsedPassword = schemaPassword.safeParse(password);
 
-  if (login && !parsedLogin.success) {
+  if (!parsedLogin.success) {
     throw new ValidationError('Login must be non-empty string');
   }
 
-  if (email && !parsedEmail.success) {
+  if (!parsedEmail.success) {
     throw new ValidationError('Email must be like mail@example.by');
   }
 
-  if (password && !parsedPassword.success) {
+  if (!parsedPassword.success) {
     throw new ValidationError(
       'Password must include lowercase letter, uppercase letter, special character, digit and be minimum 8 characters length.'
     );

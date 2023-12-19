@@ -32,9 +32,11 @@ export const userService = {
     return newUser;
   },
 
-  async update(user: User): Promise<User> {
-    const { id, login, email, password, role } = user;
+  async update(userData: User): Promise<User> {
+    const { id, login, email, password, role } = userData;
+
     await userRepository.getById(id);
+
     const existingUsers = await userRepository.getByLoginOrEmail({
       email,
       login,
@@ -43,7 +45,8 @@ export const userService = {
     if (existingUsers.length > 0) {
       throw new DbError(`User with same email or login is already exists`, 409);
     }
-    const hashedPassword = this.hashPassword(password);
+
+    const hashedPassword = password && this.hashPassword(password);
 
     const updatedUser = await userRepository.update({
       id,

@@ -8,11 +8,11 @@ export const validatePost = validator('json', (value) => {
   const parsedAuthorId = schemaAuthorId.safeParse(authorId);
   const parsedText = schemaText.safeParse(text);
 
-  if (parsedAuthorId && !parsedAuthorId.success) {
+  if (!parsedAuthorId.success) {
     throw new ValidationError('Author ID must be a number');
   }
 
-  if (parsedText && !parsedText.success) {
+  if (!parsedText.success) {
     throw new ValidationError('Post text must be non-empty string');
   }
 

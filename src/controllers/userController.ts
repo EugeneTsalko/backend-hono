@@ -25,14 +25,9 @@ export const userController = {
   },
 
   async update(c: UserContext) {
-    const { id, login, email, password, role } = c.req.valid('json');
-    const updatedUser = await userService.update({
-      id,
-      login,
-      email,
-      password,
-      role,
-    });
+    const userData = c.req.valid('json');
+
+    const updatedUser = await userService.update(userData);
 
     return c.json({ data: updatedUser, ok: true }, 200);
   },
