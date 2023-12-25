@@ -6,9 +6,11 @@
   },
   "dependencies": {
     "@hono/node-server": "^1.2.2",
+    "@hono/swagger-ui": "^0.2.0",
+    "@hono/zod-openapi": "^0.9.5",
     "@prisma/client": "^5.7.0",
     "bcrypt": "^5.1.1",
-    "hono": "^3.10.0",
+    "hono": "^3.11.10",
     "zod": "^3.22.4"
   },
   "devDependencies": {

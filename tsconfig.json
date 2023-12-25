@@ -6,6 +6,7 @@
     "esModuleInterop": true,
     "strict": true,
     "lib": ["esnext"],
-    "types": ["node"]
+    "types": ["node"],
+    "resolveJsonModule": true
   }
 }
