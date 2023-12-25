@@ -1,6 +1,7 @@
 import { type Context, type Env } from 'hono';
 import { type CommentContext, type IdContext } from '../models/contextModel';
 import { commentRepository } from '../dataAcces/commentRepository';
+import { commentService } from '../services/commentService';
 
 export const commentController = {
   async findAll(
@@ -37,5 +38,19 @@ export const commentController = {
     const deletedComment = await commentRepository.delete(id);
 
     return c.json({ data: deletedComment, ok: true }, 200);
+  },
+
+  async like(c: IdContext) {
+    const { id } = c.req.valid('param');
+    const comment = await commentService.like(id);
+
+    return c.json({ data: comment, ok: true }, 200);
+  },
+
+  async dislike(c: IdContext) {
+    const { id } = c.req.valid('param');
+    const comment = await commentService.dislike(id);
+
+    return c.json({ data: comment, ok: true }, 200);
   },
 };
