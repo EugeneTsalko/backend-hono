@@ -2,11 +2,13 @@ import { OpenAPIHono } from '@hono/zod-openapi';
 import { swaggerUI } from '@hono/swagger-ui';
 import { userDoc } from './userDoc';
 import { postDoc } from './postDoc';
+import { authDoc } from './authDoc';
 
 export const docRoutes = new OpenAPIHono();
 
 docRoutes.route('/', userDoc);
 docRoutes.route('/', postDoc);
+docRoutes.route('/', authDoc);
 
 docRoutes.doc('/doc', {
   info: {
@@ -18,6 +20,7 @@ docRoutes.doc('/doc', {
   tags: [
     { name: 'users', description: 'Operations with users.' },
     { name: 'posts', description: 'Operations with posts.' },
+    { name: 'auth', description: 'Operations with authentication.' },
   ],
   security: [{}],
 });
