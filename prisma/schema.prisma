@@ -16,6 +16,7 @@ model User {
   email String @unique
   password String
   posts Post[]
+  comments Comment[]
   role String @default("USER")
 }
 
@@ -24,5 +25,18 @@ model Post {
   author User @relation(fields: [authorId], references: [id])
   authorId Int
   createdAt DateTime @default(now())
+  text String
+  comments Comment[]
+}
+
+model Comment {
+  id Int  @id @default(autoincrement())
+  author User @relation(fields: [authorId], references: [id])
+  authorId Int
+  post Post @relation(fields: [postId], references: [id])
+  postId Int
+  createdAt DateTime @default(now())
+  likes Int @default(0)
+  dislikes Int @default(0)
   text String
 }
