@@ -1,12 +1,10 @@
-import { type Env, type Context } from 'hono';
+import { type Context } from 'hono';
 import { userRepository } from '../dataAcces/userRepository';
 import { userService } from '../services/userService';
 import { type IdContext, type UserContext } from '../models/contextModel';
 
 export const userController = {
-  async findAll(
-    c: Context<Env, '/users', Record<string, unknown>>
-  ): Promise<Response> {
+  async findAll(c: Context) {
     const users = await userRepository.getAll();
 
     return c.json({ data: users, ok: true }, 200);
@@ -20,20 +18,16 @@ export const userController = {
   },
 
   async create(c: UserContext) {
-    const { login, email, password } = c.req.valid('json');
-    const newUser = await userService.create({ login, email, password });
+    const { login, email, password, role } = c.req.valid('json');
+    const newUser = await userService.create({ login, email, password, role });
 
     return c.json({ data: newUser, ok: true }, 201);
   },
 
   async update(c: UserContext) {
-    const { id, login, email, password } = c.req.valid('json');
-    const updatedUser = await userService.update({
-      id,
-      login,
-      email,
-      password,
-    });
+    const userData = c.req.valid('json');
+
+    const updatedUser = await userService.update(userData);
 
     return c.json({ data: updatedUser, ok: true }, 200);
   },

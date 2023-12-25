@@ -16,6 +16,7 @@ model User {
   email String @unique
   password String
   posts Post[]
+  role String @default("USER")
 }
 
 model Post {

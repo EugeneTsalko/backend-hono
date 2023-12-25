@@ -12,8 +12,13 @@
 # STEP 1:
 
 - Set up a project
-- Create 5 routes for users so you’ll be able to get one user by id, get all users, add a user, delete a user by id and update a user
-- User routes should interact with a database
+- Create 5 routes for users and posts so you’ll be able to get one user/post by id, get all users/posts, add a user/post, delete a user/post by id and update a user/post
+- User/post routes should interact with a database
+
+# STEP 2:
+
+- Jwt authentication
+- Authorization by role
 
 ```
 npm install

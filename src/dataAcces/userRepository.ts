@@ -23,36 +23,32 @@ export const userRepository = {
     return user;
   },
 
-  async getByLoginOrEmail(login: string, email: string) {
+  async getByLoginOrEmail({ email, login }: Record<string, string>) {
     const users = await prisma.user.findMany({
       where: {
         OR: [{ login }, { email }],
       },
     });
 
-    if (users.length > 0) {
-      throw new DbError(`User with same login or email is already exists`, 409);
-    }
-
     return users;
   },
 
   async create(user: UserBodyType) {
-    const { login, email, password } = user;
+    const { login, email, password, role } = user;
 
     const newUser = await prisma.user.create({
-      data: { login, email, password },
+      data: { login, email, password, role },
     });
 
     return newUser;
   },
 
   async update(user: User) {
-    const { id, login, email, password } = user;
+    const { id, login, email, password, role } = user;
 
     const updatedUser = await prisma.user.update({
       where: { id },
-      data: { login, email, password },
+      data: { login, email, password, role },
     });
 
     return updatedUser;

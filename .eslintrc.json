@@ -11,6 +11,7 @@
   "rules": {
     "no-console": "warn",
     "@typescript-eslint/strict-boolean-expressions": "off",
-    "@typescript-eslint/unbound-method": "off"
+    "@typescript-eslint/unbound-method": "off",
+    "@typescript-eslint/no-non-null-assertion": "off"
   }
 }
