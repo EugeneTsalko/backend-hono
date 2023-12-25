@@ -1,9 +1,10 @@
 import { OpenAPIHono } from '@hono/zod-openapi';
 import { swaggerUI } from '@hono/swagger-ui';
+import { userDoc } from './userDoc';
 
 export const docRoutes = new OpenAPIHono();
 
-docRoutes.get('/docs', swaggerUI({ url: 'doc' }));
+docRoutes.route('/', userDoc);
 
 docRoutes.doc('/doc', {
   info: {
@@ -12,4 +13,8 @@ docRoutes.doc('/doc', {
     description: 'Server with Auth and CRUD for Users, Posts, Comments.',
   },
   openapi: '3.1.0',
+  tags: [{ name: 'users', description: 'Operations with users.' }],
+  security: [{}],
 });
+
+docRoutes.get('/docs', swaggerUI({ url: 'doc' }));

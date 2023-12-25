@@ -2,7 +2,7 @@ import { Hono } from 'hono';
 import { userRoutes } from './userRoutes';
 import { postRoutes } from './postRoutes';
 import { authRoutes } from './authRoutes';
-import { docRoutes } from '../swagger/swagger';
+import { docRoutes } from '../swagger';
 
 export const routes = new Hono();
 
