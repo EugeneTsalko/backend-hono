@@ -2,8 +2,6 @@ import { type Context } from 'hono';
 import { userRepository } from '../dataAcces/userRepository';
 import { userService } from '../services/userService';
 import { type IdContext, type UserContext } from '../models/contextModel';
-import { commentRepository } from '../dataAcces/commentRepository';
-import { commentService } from '../services/commentService';
 
 export const userController = {
   async findAll(c: Context) {
@@ -39,19 +37,5 @@ export const userController = {
     const deletedUser = await userRepository.delete(id);
 
     return c.json({ data: deletedUser, ok: true }, 200);
-  },
-
-  async like(c: IdContext) {
-    const { id } = c.req.valid('param');
-    const comment = await commentService.like(id);
-
-    return c.json({ data: comment, ok: true }, 200);
-  },
-
-  async dislike(c: IdContext) {
-    const { id } = c.req.valid('param');
-    const comment = await commentService.dislike(id);
-
-    return c.json({ data: comment, ok: true }, 200);
   },
 };

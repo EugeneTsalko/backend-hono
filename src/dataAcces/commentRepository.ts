@@ -38,6 +38,15 @@ export const commentRepository = {
 
   async update(comment: Comment) {
     const { id, authorId, postId, text, likes, dislikes } = comment;
+    await this.getById(id);
+
+    if (authorId) {
+      await userRepository.getById(authorId);
+    }
+
+    if (postId) {
+      await postRepository.getById(postId);
+    }
 
     const updatedComment = await prisma.comment.update({
       where: { id },

@@ -3,11 +3,13 @@ import { swaggerUI } from '@hono/swagger-ui';
 import { userDoc } from './userDoc';
 import { postDoc } from './postDoc';
 import { authDoc } from './authDoc';
+import { commentDoc } from './commentDoc';
 
 export const docRoutes = new OpenAPIHono();
 
 docRoutes.route('/', userDoc);
 docRoutes.route('/', postDoc);
+docRoutes.route('/', commentDoc);
 docRoutes.route('/', authDoc);
 
 docRoutes.doc('/doc', {
@@ -20,6 +22,7 @@ docRoutes.doc('/doc', {
   tags: [
     { name: 'users', description: 'Operations with users.' },
     { name: 'posts', description: 'Operations with posts.' },
+    { name: 'comments', description: 'Operations with comments.' },
     { name: 'auth', description: 'Operations with authentication.' },
   ],
   security: [{}],
