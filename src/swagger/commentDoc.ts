@@ -8,6 +8,7 @@ commentDoc.openapi(
     method: 'get',
     path: '/comments',
     tags: ['comments'],
+    security: [{ bearer: ['read', 'write'] }],
     summary: 'Find all comments',
     responses: {
       200: {
@@ -63,6 +64,7 @@ commentDoc.openapi(
       },
     ],
     tags: ['comments'],
+    security: [{ bearer: ['read', 'write'] }],
     summary: 'Find comment by ID',
     responses: {
       200: {
@@ -119,6 +121,7 @@ commentDoc.openapi(
       },
     },
     tags: ['comments'],
+    security: [{ bearer: ['read', 'write'] }],
     summary: 'Add new Comments to the database',
     responses: {
       201: {
@@ -172,6 +175,7 @@ commentDoc.openapi(
       },
     },
     tags: ['comments'],
+    security: [{ bearer: ['read', 'write'] }],
     summary: 'Edit Comment in the database by ID',
     responses: {
       200: {
@@ -224,6 +228,7 @@ commentDoc.openapi(
       },
     ],
     tags: ['comments'],
+    security: [{ bearer: ['read', 'write'] }],
     summary: 'Delete comment by ID',
     responses: {
       200: {

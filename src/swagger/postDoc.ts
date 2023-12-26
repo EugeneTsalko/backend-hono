@@ -8,6 +8,7 @@ postDoc.openapi(
     method: 'get',
     path: '/posts',
     tags: ['posts'],
+    security: [{ bearer: ['read', 'write'] }],
     summary: 'Find all posts',
     responses: {
       200: {
@@ -57,6 +58,7 @@ postDoc.openapi(
       },
     ],
     tags: ['posts'],
+    security: [{ bearer: ['read', 'write'] }],
     summary: 'Find post by ID',
     responses: {
       200: {
@@ -109,6 +111,7 @@ postDoc.openapi(
       },
     },
     tags: ['posts'],
+    security: [{ bearer: ['read', 'write'] }],
     summary: 'Add new Post to the database',
     responses: {
       201: {
@@ -159,6 +162,7 @@ postDoc.openapi(
       },
     },
     tags: ['posts'],
+    security: [{ bearer: ['read', 'write'] }],
     summary: 'Edit Post in the database by ID',
     responses: {
       200: {
@@ -208,6 +212,7 @@ postDoc.openapi(
       },
     ],
     tags: ['posts'],
+    security: [{ bearer: ['read', 'write'] }],
     summary: 'Delete post by ID',
     responses: {
       200: {

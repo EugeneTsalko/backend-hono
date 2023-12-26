@@ -25,7 +25,11 @@ docRoutes.doc('/doc', {
     { name: 'comments', description: 'Operations with comments.' },
     { name: 'auth', description: 'Operations with authentication.' },
   ],
-  security: [{}],
+});
+
+docRoutes.openAPIRegistry.registerComponent('securitySchemes', 'bearer', {
+  type: 'http',
+  scheme: 'bearer',
 });
 
 docRoutes.get('/docs', swaggerUI({ url: 'doc' }));

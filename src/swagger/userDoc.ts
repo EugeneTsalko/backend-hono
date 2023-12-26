@@ -8,6 +8,7 @@ userDoc.openapi(
     method: 'get',
     path: '/users',
     tags: ['users'],
+    security: [{ bearer: ['read', 'write'] }],
     summary: 'Find all users',
     responses: {
       200: {
@@ -59,6 +60,7 @@ userDoc.openapi(
       },
     ],
     tags: ['users'],
+    security: [{ bearer: ['read', 'write'] }],
     summary: 'Find user by ID',
     responses: {
       200: {
@@ -114,6 +116,7 @@ userDoc.openapi(
       },
     },
     tags: ['users'],
+    security: [{ bearer: ['read', 'write'] }],
     summary: 'Add new User to the database',
     responses: {
       201: {
@@ -121,6 +124,14 @@ userDoc.openapi(
         content: {
           'application/json': {
             schema: z.object({ data: userSchema, ok: z.boolean() }),
+          },
+        },
+      },
+      400: {
+        description: 'Need ADMIN for this route.',
+        content: {
+          'application/json': {
+            schema: z.object({ message: z.string(), ok: z.boolean() }),
           },
         },
       },
@@ -165,6 +176,7 @@ userDoc.openapi(
       },
     },
     tags: ['users'],
+    security: [{ bearer: ['read', 'write'] }],
     summary: 'Edit User in the database by ID',
     responses: {
       200: {
@@ -215,6 +227,7 @@ userDoc.openapi(
       },
     ],
     tags: ['users'],
+    security: [{ bearer: ['read', 'write'] }],
     summary: 'Delete user by ID',
     responses: {
       200: {
@@ -222,6 +235,14 @@ userDoc.openapi(
         content: {
           'application/json': {
             schema: z.object({ data: userSchema, ok: z.boolean() }),
+          },
+        },
+      },
+      400: {
+        description: 'Need ADMIN for this route.',
+        content: {
+          'application/json': {
+            schema: z.object({ message: z.string(), ok: z.boolean() }),
           },
         },
       },
