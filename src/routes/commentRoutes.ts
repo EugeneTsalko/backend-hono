@@ -48,6 +48,26 @@ commentRoutes.patch(
   commentController.update
 );
 
+commentRoutes.patch(
+  'like/:id',
+  jwt({
+    secret: JWT_ACCESS_SECRET,
+  }),
+  isSignedIn,
+  validateId,
+  commentController.like
+);
+
+commentRoutes.patch(
+  'dislike/:id',
+  jwt({
+    secret: JWT_ACCESS_SECRET,
+  }),
+  isSignedIn,
+  validateId,
+  commentController.dislike
+);
+
 commentRoutes.delete(
   '/:id',
   jwt({

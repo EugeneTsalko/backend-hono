@@ -29,8 +29,8 @@ commentDoc.openapi(
           authorId: 1,
           postId: 1,
           createdAt: '2023-12-25T19:15:03.778Z',
-          likes: 0,
-          dislikes: 0,
+          likedBy: [],
+          dislikedBy: [],
           text: 'comment text',
         },
         {
@@ -38,8 +38,8 @@ commentDoc.openapi(
           authorId: 3,
           postId: 2,
           createdAt: '2023-12-25T19:15:03.778Z',
-          likes: 0,
-          dislikes: 0,
+          likedBy: [],
+          dislikedBy: [],
           text: 'comment text 2',
         },
       ],
@@ -95,8 +95,8 @@ commentDoc.openapi(
         authorId: 1,
         postId: 1,
         createdAt: '2023-12-25T19:15:03.778Z',
-        likes: 0,
-        dislikes: 0,
+        likedBy: [],
+        dislikedBy: [],
         text: 'comment text',
       },
       ok: true,
@@ -149,8 +149,8 @@ commentDoc.openapi(
         authorId: 1,
         postId: 1,
         createdAt: '2023-12-25T19:15:03.778Z',
-        likes: 0,
-        dislikes: 0,
+        likedBy: [],
+        dislikedBy: [],
         text: 'lorem ipsum dolor',
       },
       ok: true,
@@ -203,9 +203,121 @@ commentDoc.openapi(
         authorId: 3,
         postId: 1,
         createdAt: '2023-12-25T19:15:03.778Z',
-        likes: 0,
-        dislikes: 0,
+        likedBy: [],
+        dislikedBy: [],
         text: 'updated comment text',
+      },
+      ok: true,
+    });
+  }
+);
+
+commentDoc.openapi(
+  createRoute({
+    method: 'patch',
+    path: '/comments/like/{id}',
+    parameters: [
+      {
+        name: 'id',
+        in: 'path',
+        description: `ID of comment to use`,
+        required: true,
+        schema: {
+          type: 'integer',
+        },
+      },
+    ],
+    tags: ['comments'],
+    security: [{ bearer: ['read', 'write'] }],
+    summary: 'Like comment by ID',
+    responses: {
+      200: {
+        description: 'Returns one comment',
+        content: {
+          'application/json': {
+            schema: z.object({ data: schemaComment, ok: z.boolean() }),
+          },
+        },
+      },
+      404: {
+        description: 'Comment or user with this ID was not found',
+        content: {
+          'application/json': {
+            schema: z.object({
+              message: z.string(),
+              ok: z.boolean(),
+            }),
+          },
+        },
+      },
+    },
+  }),
+  (c) => {
+    return c.json({
+      data: {
+        id: 1,
+        authorId: 1,
+        postId: 1,
+        createdAt: '2023-12-25T19:15:03.778Z',
+        likedBy: [{ userId: 1, commentId: 1 }],
+        dislikedBy: [],
+        text: 'comment text',
+      },
+      ok: true,
+    });
+  }
+);
+
+commentDoc.openapi(
+  createRoute({
+    method: 'patch',
+    path: '/comments/dislike/{id}',
+    parameters: [
+      {
+        name: 'id',
+        in: 'path',
+        description: `ID of comment to use`,
+        required: true,
+        schema: {
+          type: 'integer',
+        },
+      },
+    ],
+    tags: ['comments'],
+    security: [{ bearer: ['read', 'write'] }],
+    summary: 'Dislike comment by ID',
+    responses: {
+      200: {
+        description: 'Returns one comment',
+        content: {
+          'application/json': {
+            schema: z.object({ data: schemaComment, ok: z.boolean() }),
+          },
+        },
+      },
+      404: {
+        description: 'Comment or user with this ID was not found',
+        content: {
+          'application/json': {
+            schema: z.object({
+              message: z.string(),
+              ok: z.boolean(),
+            }),
+          },
+        },
+      },
+    },
+  }),
+  (c) => {
+    return c.json({
+      data: {
+        id: 1,
+        authorId: 1,
+        postId: 1,
+        createdAt: '2023-12-25T19:15:03.778Z',
+        likedBy: [],
+        dislikedBy: [{ userId: 1, commentId: 1 }],
+        text: 'comment text',
       },
       ok: true,
     });
@@ -259,8 +371,8 @@ commentDoc.openapi(
         authorId: 1,
         postId: 1,
         createdAt: '2023-12-25T19:15:03.778Z',
-        likes: 0,
-        dislikes: 0,
+        likedBy: [],
+        dislikedBy: [],
         text: 'lorem ipsum dolor',
       },
       ok: true,

@@ -7,7 +7,12 @@ const prisma = new PrismaClient();
 
 export const commentRepository = {
   async getAll() {
-    const dbResult = await prisma.comment.findMany();
+    const dbResult = await prisma.comment.findMany({
+      include: {
+        likedBy: true,
+        dislikedBy: true,
+      },
+    });
 
     return dbResult;
   },
@@ -15,6 +20,10 @@ export const commentRepository = {
   async getById(id: number) {
     const comment = await prisma.comment.findUnique({
       where: { id },
+      include: {
+        likedBy: true,
+        dislikedBy: true,
+      },
     });
 
     if (!comment) {
@@ -37,7 +46,7 @@ export const commentRepository = {
   },
 
   async update(comment: Comment) {
-    const { id, authorId, postId, text, likes, dislikes } = comment;
+    const { id, authorId, postId, text } = comment;
     await this.getById(id);
 
     if (authorId) {
@@ -50,7 +59,7 @@ export const commentRepository = {
 
     const updatedComment = await prisma.comment.update({
       where: { id },
-      data: { authorId, postId, text, likes, dislikes },
+      data: { authorId, postId, text },
     });
 
     return updatedComment;

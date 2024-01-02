@@ -8,7 +8,17 @@ export const schemaComment = z.object({
   authorId: schemaId,
   postId: schemaId,
   createdAt: z.string(),
-  likes: z.number(),
-  dislikes: z.number(),
+  likedBy: z.array(
+    z.object({
+      userId: schemaId,
+      commentId: schemaId,
+    })
+  ),
+  dislikedBy: z.array(
+    z.object({
+      userId: schemaId,
+      commentId: schemaId,
+    })
+  ),
   text: schemaText,
 });
