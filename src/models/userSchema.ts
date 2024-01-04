@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { schemaId } from './idSchema';
 
 export const schemaLogin = z.string().min(1);
 
@@ -13,3 +14,11 @@ export const schemaPassword = z
   .regex(/.*[0-9].*/, 'One digit');
 
 export const schemaRole = z.union([z.literal('ADMIN'), z.literal('USER')]);
+
+export const userSchema = z.object({
+  id: schemaId,
+  login: schemaLogin,
+  email: schemaEmail,
+  password: z.string(),
+  role: z.string(),
+});
