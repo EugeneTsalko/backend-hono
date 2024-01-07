@@ -2,7 +2,7 @@ import { type File } from 'buffer';
 import fs from 'fs';
 import path from 'path';
 
-export const fileFervice = {
+export const fileService = {
   isDirEmpty(path: string): boolean {
     return fs.readdirSync(path).length === 0;
   },
