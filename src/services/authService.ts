@@ -3,7 +3,8 @@ import { userRepository } from '../dataAcces/userRepository';
 import { DbError, ValidationError } from '../errors/errors';
 import bcrypt from 'bcrypt';
 import { userService } from './userService';
-import { type SignUpDataType } from '../models/userModel';
+import { type ISignUpData } from '../models/userModel';
+import { fileService } from './fileService';
 
 export const authService = {
   async generateTokens({ id, email }: Record<string, unknown>) {
@@ -19,13 +20,18 @@ export const authService = {
     return accessToken;
   },
 
-  async signUp(user: SignUpDataType) {
-    const { login, email, password } = user;
+  async signUp(user: ISignUpData) {
+    const { login, email, password, image } = user;
+
+    const dir = `./upload/user/${login}/avatar`;
+    const pathToImage = await fileService.uploadFile(image, dir, 'avatar');
+
     const newUser = await userService.create({
       login,
       email,
       password,
       role: 'USER',
+      image: pathToImage,
     });
 
     return newUser;

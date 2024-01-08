@@ -10,7 +10,7 @@ export const userService = {
   },
 
   async create(user: UserBodyType) {
-    const { login, email, password, role } = user;
+    const { login, email, password, role, image } = user;
 
     const existingUsers = await userRepository.getByLoginOrEmail({
       email,
@@ -27,13 +27,14 @@ export const userService = {
       email,
       password: hashedPassword,
       role,
+      image,
     });
 
     return newUser;
   },
 
   async update(userData: User): Promise<User> {
-    const { id, login, email, password, role } = userData;
+    const { id, login, email, password, role, image } = userData;
 
     await userRepository.getById(id);
 
@@ -54,6 +55,7 @@ export const userService = {
       email,
       password: hashedPassword,
       role,
+      image,
     });
 
     return updatedUser;

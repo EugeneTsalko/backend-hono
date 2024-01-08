@@ -34,21 +34,21 @@ export const userRepository = {
   },
 
   async create(user: UserBodyType) {
-    const { login, email, password, role } = user;
+    const { login, email, password, role, image } = user;
 
     const newUser = await prisma.user.create({
-      data: { login, email, password, role },
+      data: { login, email, password, role, image },
     });
 
     return newUser;
   },
 
   async update(user: User) {
-    const { id, login, email, password, role } = user;
+    const { id, login, email, password, role, image } = user;
 
     const updatedUser = await prisma.user.update({
       where: { id },
-      data: { login, email, password, role },
+      data: { login, email, password, role, image },
     });
 
     return updatedUser;

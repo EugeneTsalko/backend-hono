@@ -1,13 +1,12 @@
 import { validator } from 'hono/validator';
 import { schemaEmail, schemaLogin, schemaPassword } from '../models/userSchema';
 import { ValidationError } from '../errors/errors';
-import { type User } from '@prisma/client';
 import { type Context, type Next } from 'hono';
 import { userRepository } from '../dataAcces/userRepository';
-import { type JwtPayloadType } from '../models/userModel';
+import { type JwtPayloadType, type ISignUpData } from '../models/userModel';
 
-export const validateSignIn = validator('json', (value) => {
-  const { email, password }: User = value;
+export const validateSignIn = validator('form', (value) => {
+  const { email, password } = value;
   const parsedEmail = schemaEmail.safeParse(email);
   const parsedPassword = schemaPassword.safeParse(password);
 
@@ -24,8 +23,8 @@ export const validateSignIn = validator('json', (value) => {
   return { email, password };
 });
 
-export const validateSignUp = validator('json', (value) => {
-  const { login, email, password }: User = value;
+export const validateSignUp = validator('form', (value: ISignUpData) => {
+  const { login, email, password, image } = value;
   const parsedLogin = schemaLogin.safeParse(login);
   const parsedEmail = schemaEmail.safeParse(email);
   const parsedPassword = schemaPassword.safeParse(password);
@@ -44,7 +43,11 @@ export const validateSignUp = validator('json', (value) => {
     );
   }
 
-  return { login, email, password };
+  if (!image) {
+    throw new ValidationError('User avatar image must be non-empty file.');
+  }
+
+  return { login, email, password, image };
 });
 
 export const isAdmin = async (c: Context, next: Next): Promise<void> => {
