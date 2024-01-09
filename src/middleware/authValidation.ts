@@ -1,9 +1,9 @@
 import { validator } from 'hono/validator';
-import { schemaEmail, schemaLogin, schemaPassword } from '../models/userSchema';
+import { schemaEmail, schemaImage, schemaLogin, schemaPassword } from '../models/userSchema';
 import { ValidationError } from '../errors/errors';
 import { type Context, type Next } from 'hono';
 import { userRepository } from '../dataAcces/userRepository';
-import { type JwtPayloadType, type ISignUpData } from '../models/userModel';
+import { type JwtPayloadType, type SignUpDataType } from '../models/userModel';
 
 export const validateSignIn = validator('form', (value) => {
   const { email, password } = value;
@@ -23,11 +23,13 @@ export const validateSignIn = validator('form', (value) => {
   return { email, password };
 });
 
-export const validateSignUp = validator('form', (value: ISignUpData) => {
+export const validateSignUp = validator('form', (value: SignUpDataType) => {
   const { login, email, password, image } = value;
   const parsedLogin = schemaLogin.safeParse(login);
   const parsedEmail = schemaEmail.safeParse(email);
   const parsedPassword = schemaPassword.safeParse(password);
+  const parsedImage = schemaImage.safeParse(image);
+  
 
   if (!parsedLogin.success) {
     throw new ValidationError('Login must be non-empty string');
@@ -43,8 +45,8 @@ export const validateSignUp = validator('form', (value: ISignUpData) => {
     );
   }
 
-  if (!image) {
-    throw new ValidationError('User avatar image must be non-empty file.');
+  if (!parsedImage.success) {
+    throw new ValidationError('User image must be Base64 string');
   }
 
   return { login, email, password, image };
