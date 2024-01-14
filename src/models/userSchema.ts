@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { schemaId } from './idSchema';
+import { Base64 } from 'js-base64';
 
 export const schemaLogin = z.string().min(1);
 
@@ -15,10 +16,13 @@ export const schemaPassword = z
 
 export const schemaRole = z.union([z.literal('ADMIN'), z.literal('USER')]);
 
+export const schemaImage = z.string().refine(Base64.isValid);
+
 export const userSchema = z.object({
   id: schemaId,
   login: schemaLogin,
   email: schemaEmail,
   password: z.string(),
   role: z.string(),
+  image: schemaImage,
 });

@@ -15,6 +15,7 @@ model User {
   login String @unique
   email String @unique
   password String
+  image String
   posts Post[]
   comments Comment[]
   likedComments LikedComment[]

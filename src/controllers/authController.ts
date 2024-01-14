@@ -3,7 +3,7 @@ import { authService } from '../services/authService';
 
 export const authController = {
   async signUp(c: AuthContext) {
-    const userData = c.req.valid('json');
+    const userData = c.req.valid('form');
 
     const newUser = await authService.signUp(userData);
 
@@ -11,7 +11,7 @@ export const authController = {
   },
 
   async signIn(c: AuthContext) {
-    const { email, password } = c.req.valid('json');
+    const { email, password } = c.req.valid('form');
 
     const userData = await authService.signIn({ email, password });
 

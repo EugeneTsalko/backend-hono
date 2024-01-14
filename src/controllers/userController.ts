@@ -18,8 +18,8 @@ export const userController = {
   },
 
   async create(c: UserContext) {
-    const { login, email, password, role } = c.req.valid('json');
-    const newUser = await userService.create({ login, email, password, role });
+    const { login, email, password, role, image } = c.req.valid('json');
+    const newUser = await userService.create({ login, email, password, role, image });
 
     return c.json({ data: newUser, ok: true }, 201);
   },
