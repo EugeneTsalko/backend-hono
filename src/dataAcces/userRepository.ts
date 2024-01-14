@@ -1,6 +1,6 @@
-import { PrismaClient, type User } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import { DbError } from '../errors/errors';
-import { type UserBodyType } from '../models/userModel';
+import { type UserType, type UserBodyType } from '../models/userModel';
 
 const prisma = new PrismaClient();
 
@@ -43,7 +43,7 @@ export const userRepository = {
     return newUser;
   },
 
-  async update(user: User) {
+  async update(user: UserType) {
     const { id, login, email, password, role, image } = user;
 
     const updatedUser = await prisma.user.update({

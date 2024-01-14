@@ -1,7 +1,6 @@
 import bcrypt from 'bcrypt';
 import { userRepository } from '../dataAcces/userRepository';
-import { type User } from '@prisma/client';
-import { type UserBodyType } from '../models/userModel';
+import { type UserType, type UserBodyType } from '../models/userModel';
 import { DbError } from '../errors/errors';
 
 export const userService = {
@@ -33,7 +32,7 @@ export const userService = {
     return newUser;
   },
 
-  async update(userData: User): Promise<User> {
+  async update(userData: UserType): Promise<UserType> {
     const { id, login, email, password, role, image } = userData;
 
     await userRepository.getById(id);

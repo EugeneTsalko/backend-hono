@@ -7,16 +7,15 @@ import {
   schemaRole,
 } from '../models/userSchema';
 import { ValidationError } from '../errors/errors';
-import { type User } from '@prisma/client';
+import { type UserType } from '../models/userModel';
 
 export const validateUser = validator('json', (value) => {
-  const { id, login, email, password, role, image }: User = value;
+  const { id, login, email, password, role, image }: UserType = value;
   const parsedLogin = schemaLogin.safeParse(login);
   const parsedEmail = schemaEmail.safeParse(email);
   const parsedPassword = schemaPassword.safeParse(password);
   const parsedRole = schemaRole.safeParse(role);
   const parsedImage = schemaImage.safeParse(image);
-
 
   if (login && !parsedLogin.success) {
     throw new ValidationError('Login must be non-empty string');
