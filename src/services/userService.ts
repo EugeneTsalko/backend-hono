@@ -1,7 +1,6 @@
 import bcrypt from 'bcrypt';
 import { userRepository } from '../dataAcces/userRepository';
-import { type User } from '@prisma/client';
-import { type UserBodyType } from '../models/userModel';
+import { type UserType, type UserBodyType } from '../models/userModel';
 import { DbError } from '../errors/errors';
 
 export const userService = {
@@ -10,7 +9,7 @@ export const userService = {
   },
 
   async create(user: UserBodyType) {
-    const { login, email, password, role } = user;
+    const { login, email, password, role, image } = user;
 
     const existingUsers = await userRepository.getByLoginOrEmail({
       email,
@@ -27,13 +26,14 @@ export const userService = {
       email,
       password: hashedPassword,
       role,
+      image,
     });
 
     return newUser;
   },
 
-  async update(userData: User): Promise<User> {
-    const { id, login, email, password, role } = userData;
+  async update(userData: UserType): Promise<UserType> {
+    const { id, login, email, password, role, image } = userData;
 
     await userRepository.getById(id);
 
@@ -54,6 +54,7 @@ export const userService = {
       email,
       password: hashedPassword,
       role,
+      image,
     });
 
     return updatedUser;

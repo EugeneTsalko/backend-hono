@@ -20,12 +20,14 @@ export const authService = {
   },
 
   async signUp(user: SignUpDataType) {
-    const { login, email, password } = user;
+    const { login, email, password, image } = user;
+
     const newUser = await userService.create({
       login,
       email,
       password,
       role: 'USER',
+      image,
     });
 
     return newUser;

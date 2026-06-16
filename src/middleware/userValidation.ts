@@ -1,19 +1,21 @@
 import { validator } from 'hono/validator';
 import {
   schemaEmail,
+  schemaImage,
   schemaLogin,
   schemaPassword,
   schemaRole,
 } from '../models/userSchema';
 import { ValidationError } from '../errors/errors';
-import { type User } from '@prisma/client';
+import { type UserType } from '../models/userModel';
 
 export const validateUser = validator('json', (value) => {
-  const { id, login, email, password, role }: User = value;
-  const parsedLogin = schemaLogin.safeParse(value.login);
-  const parsedEmail = schemaEmail.safeParse(value.email);
-  const parsedPassword = schemaPassword.safeParse(value.password);
-  const parsedRole = schemaRole.safeParse(value.role);
+  const { id, login, email, password, role, image }: UserType = value;
+  const parsedLogin = schemaLogin.safeParse(login);
+  const parsedEmail = schemaEmail.safeParse(email);
+  const parsedPassword = schemaPassword.safeParse(password);
+  const parsedRole = schemaRole.safeParse(role);
+  const parsedImage = schemaImage.safeParse(image);
 
   if (login && !parsedLogin.success) {
     throw new ValidationError('Login must be non-empty string');
@@ -33,5 +35,9 @@ export const validateUser = validator('json', (value) => {
     throw new ValidationError('User role must be USER or ADMIN');
   }
 
-  return { id, login, email, password, role };
+  if (image && !parsedImage.success) {
+    throw new ValidationError('User image must be Base64 string');
+  }
+
+  return { id, login, email, password, role, image };
 });
